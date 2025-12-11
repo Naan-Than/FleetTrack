@@ -1,23 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Location permissions -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    
-    <!-- Required for background location on Android 10+ -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
-    <!-- Foreground service permissions (Android 9+) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    
-    <!-- Android 14+ (API 34) requires this specific type for location foreground services -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
-
-    <!-- Optional but recommended for better battery on Android 12+ -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
 
     <application
       android:name=".MainApplication"
@@ -28,19 +11,6 @@
       android:theme="@style/AppTheme"
       android:usesCleartextTraffic="${usesCleartextTraffic}"
       android:supportsRtl="true">
-    <service
-      android:name=".LocationService"
-      android:enabled="true"
-      android:exported="false"
-      android:foregroundServiceType="location" />
-    <service
-      android:name=".LocationTask"
-      android:enabled="true"
-      android:exported="false" />
-
-      <meta-data
-          android:name="com.google.android.geo.API_KEY"
-          android:value="AIzaSyCLOUU85hyNNpnxmqJF5oymANH1zOyYr78" />
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
