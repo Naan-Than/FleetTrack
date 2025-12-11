@@ -1,97 +1,146 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+🚚 FleetTrack – Real-Time Fleet Tracking & Geo-Clustering App
 
-# Getting Started
+FleetTrack is a high-performance React Native application designed to simulate the behavior of production-grade fleet tracking platforms like Swiggy, Dunzo, Uber, etc.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+The application displays 500+ delivery agents on a map, shows real-time driver movement, supports smart clustering, offline mode, and includes background location tracking using Android Headless JS
 
-## Step 1: Start Metro
+📦 Features
+✅ Live Driver Simulation (Mock WebSocket)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Generates 500+ drivers
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+Updates positions every few seconds
 
-```sh
-# Using npm
+Randomized active/idle/offline statuses
+
+✅ Smart Geo-Clustering
+
+High-performance region-based clustering
+
+Smooth zoom-in to reveal individual markers
+
+✅ Driver Details
+
+Bottom sheet with:
+
+Name
+
+Status
+
+Last location history
+
+Simulated current speed
+
+Polyline route drawing
+
+Offline Mode
+
+Detects network disconnection
+
+Shows last-known driver positions from Redux + storage
+
+Auto-resumes streaming when online
+
+✅ Background Location Tracking (Android)
+
+Kotlin foreground service
+
+Headless JS task (BackgroundLocationTask)
+
+Sends lat/long every 60 seconds.
+
+🚀 Getting Started
+📌 Prerequisite: React Native Environment Setup
+
+Follow the official setup guide:
+https://reactnative.dev/docs/set-up-your-environment
+▶️ Step 1: Start Metro
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+📱 Step 2: Run the App
 npm run android
 
-# OR using Yarn
-yarn android
-```
+🔧 Architecture Overview
+Native Code (Android)
+android/app/src/main/java/com/fleettrack/
+├── LocationService.kt       # Foreground service for background tracking
+├── LocationTask.kt          # Headless JS bridge
+├── MainActivity.kt
+└── MainApplication.kt
 
-### iOS
+🌐 Real-Time Update Flow
+MockWebSocket → useMockDriverSocket → MapView & Clusters → Redux Cache (Offline)
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+🛰 Background Tracking Flow (Android)
+LocationService.kt (Foreground Service)
+    ↓ sends location
+LocationTask.kt (Headless JS)
+    ↓ sends data to JS
+BackgroundLocationTask.js
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
 
-```sh
-bundle install
-```
+💡 Key Design Decisions
+1️⃣ Manual Clustering Instead of Heavy Libraries
 
-Then, and every time you update your native dependencies, run:
+Better performance
 
-```sh
-bundle exec pod install
-```
+More control over behavior
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+2️⃣ Offline-First Strategy
 
-```sh
-# Using npm
-npm run ios
+Store last-known drivers
 
-# OR using Yarn
-yarn ios
-```
+Restore instantly during offline mode
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+3️⃣ Background Location in Kotlin
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+More reliable than JS-only solutions
 
-## Step 3: Modify your app
+Uses FusedLocationProviderClient
 
-Now that you have successfully run the app, let's make changes!
+4️⃣ Clean Modular Structure
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Easy for scaling and maintenance
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+📊 Performance Optimizations
 
-## Congratulations! :tada:
+Lightweight driver updates
 
-You've successfully run and modified your React Native App. :partying_face:
+Avoids unnecessary re-renders
 
-### Now what?
+Restricts location updates to 60s
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+🛠 Build a Release APK
+cd android
+./gradlew assembleRelease
 
-# Troubleshooting
+🔮 Future Improvements
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+  Replace Mock WebSocket with Real Server
+  
+  Smooth Marker Animations
+  
+  Better Clustering
+  
+  SQLite Offline Storage
+  
+  Push Notifications
+  
+  iOS Background Tracking
 
-# Learn More
+ 📷 Screenshots (Optional Section)
+| ![login](https://github.com/user-attachments/assets/5a3570d2-51f2-4717-8696-1b3db8195c76) | ![home](https://github.com/user-attachments/assets/f95b4831-cc8b-409f-a82d-469a5580fce0) |
+| --- | --- |
+| ![mapview](https://github.com/user-attachments/assets/152ae801-dd32-4e1a-bc0b-c9901e1d853c) | ![drivers](https://github.com/user-attachments/assets/8dd88b9c-fc20-4176-8807-87c0b42f336b) |
+| --- | --- |
+| ![driverpolyline](https://github.com/user-attachments/assets/35d9440a-e479-4d0e-8482-fd4fc96b1f85) | ![offline](https://github.com/user-attachments/assets/48136d2a-d4c3-4011-9a1d-d3dffc662f2d) |
+| --- | --- |
 
-To learn more about React Native, take a look at the following resources:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+
+
+
+ 
+
