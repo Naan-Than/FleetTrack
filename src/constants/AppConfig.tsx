@@ -3,7 +3,7 @@ export const AppConfig = {
   imagePre: 'https://com/storage/',
   webClientId: "",
   
-  gmaps_API_KEY:'AIzaSyCLOUU85hyNNpnxmqJF5oymANH1zOyYr78',
+  gmaps_API_KEY:'YOUR GOOGEL API KEY',
 
 }
 
